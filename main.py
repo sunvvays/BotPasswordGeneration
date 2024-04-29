@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw, ImageFont
 import telebot
 
 
-bot = telebot.TeleBot('TOKEN')
+bot = telebot.TeleBot('6412448079:AAHCsLq2FF9_LsQmf_4NsGQ8lcB8t-DQWZY')
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     bot.reply_to(message, "Привет! Выбери тип пароля:", reply_markup=get_keyboard_markup())
@@ -46,13 +46,13 @@ def generate_password(message, password_type):
             chars = string.ascii_letters + string.digits + string.punctuation
 
         password = ''.join(random.choice(chars) for i in range(length))
-        image = create_image_with_snowflakes(password)
+        image = create_image(password)
         bot.send_photo(message.chat.id, image, caption=f"Сгенерированный пароль \n{password}:")
     except ValueError:
         bot.reply_to(message, "Пожалуйста, отправь мне целое число.")
         bot.register_next_step_handler(message, generate_password, password_type)
 
-def create_image_with_snowflakes(password):
+def create_image(password):
     font_size = 36
     font = ImageFont.truetype("arial.ttf", font_size)
 
